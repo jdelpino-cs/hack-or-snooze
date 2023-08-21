@@ -5,4 +5,5 @@
 launch.json
 .vscode/
 *.code-workspace
+**/debugging/
 *.paw
