@@ -89,15 +89,38 @@
     </form>
   </section>
 
-  <!-- Library JS & our JS -->
-  <script src="https://unpkg.com/jquery"></script>
-  <script src="https://unpkg.com/axios/dist/axios.js"></script>
+  <!-- Story forms container-->
+  <section class="add-story-container container">
 
-  <script src="js/models.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/nav.js"></script>
-  <script src="js/user.js"></script>
-  <script src="js/stories.js"></script>
+    <!-- Add story form-->
+    <form action="#" id="add-story-form" class="story-form" method="post">
+      <h4>Add Story</h4>
+      <div class="form-input">
+        <label for="add-story-title">title</label>
+        <input id="add-story-title" name="add-story-title" autocapitalize="words">
+      </div>
+      <div class="form-input">
+        <label for="add-story-author">author</label>
+        <input id="add-story-author" name="add-story-author" autocapitalize="words">
+      </div>
+      <div class="form-input">
+        <label for="add-story-url">url</label>
+        <input id="add-story-url" type="url" name="add-story-url" autocapitalize="none"
+          placeholder="https://example.com">
+      </div>
+      <button type="submit">add story</button>
+    </form>
+
+
+    <!-- Library JS & our JS -->
+    <script src="https://unpkg.com/jquery"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+
+    <script src="js/models.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/user.js"></script>
+    <script src="js/stories.js"></script>
 
 </body>
 
