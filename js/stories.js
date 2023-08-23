@@ -85,7 +85,7 @@ async function addNewStoryAndPutOnPage(evt) {
   updateUIonNewStory();
 }
 
-$addStoryForm.on("submit", addAndShowNewStory);
+$addStoryForm.on("submit", addNewStoryAndPutOnPage);
 
 /** When a user submits a new story, update UI to hide form and show
  * the update story list */
