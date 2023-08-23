@@ -50,3 +50,35 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+/** Get new story data from form, add story to backend and to DOM */
+
+async function addAndShowNewStory(evt) {
+  evt.preventDefault();
+
+  // debug prints
+  console.debug("add new form", evt);
+
+  // grab the form values
+  const title = $("#add-story-title").val();
+  const author = $("#add-story-author").val();
+  const url = $("#add-story-url").val();
+
+  // reset form
+  $loginForm.trigger("reset");
+
+  // add story to the backend and creates story instance in memory
+  const story = await storyList.addStoty(currentUser, {
+    title,
+    author,
+    url,
+  });
+
+  // generate HTML for story
+  const $story = generateStoryMarkup(story);
+
+  // append story to the dom
+  $allStoriesList.append($story);
+}
+
+$addStoryForm.on("click", addAndShowNewStory);
