@@ -53,10 +53,11 @@ function putStoriesOnPage() {
 
 /** Get new story data from form, add story to backend and to DOM */
 
-async function addAndShowNewStory(evt) {
+async function addNewStoryAndPutOnPage(evt) {
   evt.preventDefault();
+  hidePageComponents();
 
-  // debug prints
+  // debug print/s
   console.debug("add new form", evt);
 
   // grab the form values
@@ -67,8 +68,8 @@ async function addAndShowNewStory(evt) {
   // reset form
   $loginForm.trigger("reset");
 
-  // add story to the backend and creates story instance in memory
-  const story = await storyList.addStoty(currentUser, {
+  // add story to the backend and create story instance in memory
+  const story = await storyList.addStory(currentUser, {
     title,
     author,
     url,
@@ -77,8 +78,20 @@ async function addAndShowNewStory(evt) {
   // generate HTML for story
   const $story = generateStoryMarkup(story);
 
-  // append story to the dom
+  // append story to the dom and show the updated story list
   $allStoriesList.append($story);
+
+  // update the UI
+  updateUIonNewStory();
 }
 
-$addStoryForm.on("click", addAndShowNewStory);
+$addStoryForm.on("submit", addAndShowNewStory);
+
+/** When a user submits a new story, update UI to hide form and show
+ * the update story list */
+
+function updateUIonNewStory() {
+  console.debug("updateUIonNewStory");
+  $addStoryForm.hide();
+  $allStoriesList.show();
+}
