@@ -115,3 +115,53 @@ function updateUIOnUserLogin() {
   $allStoriesList.show();
   updateNavOnLogin();
 }
+
+/** When a story star is click, decides if it has to be added
+ * or deleted from user favorites*/
+
+function favoriteClickHandler(evt) {
+  console.debug("favoriteClickHandler");
+
+  // Toggle star icon class between regular –far– and solid -fas- 
+  const star = $(this);
+  star.toggleClass("far fas");
+
+  // Get star icon's parent and id
+  const story = star.parent();
+  const storyId = story.attr("id");
+  
+  if (star.hasClass("fas")) {
+    addFavoriteStory(storyId);
+  } else {
+    deleteFavoriteStory(storyId);
+  }
+}
+
+$(document).on("click", ".star", starClickHandler);
+
+/** Add a story to user's favorites */
+
+function addFavoriteStory(storyId) {
+  console.debug("addFavoriteStory");
+
+  const response = await axios({
+    url: `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
+    method: "POST",
+    data: {
+      token: currentUser.loginToken,
+    },
+  });
+
+/** Delete favorite from user's favorites */
+
+function deleteFavoriteStory(storyId) {
+  console.debug("deleteFavoriteStory");
+
+  const response = await axios({
+    url: `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
+    method: "DELETE",
+    data: {
+      token: currentUser.loginToken,
+    },
+  });
+}
