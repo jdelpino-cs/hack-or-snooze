@@ -122,14 +122,14 @@ function updateUIOnUserLogin() {
 function favoriteClickHandler(evt) {
   console.debug("favoriteClickHandler");
 
-  // Toggle star icon class between regular –far– and solid -fas- 
+  // Toggle star icon class between regular –far– and solid -fas-
   const star = $(this);
   star.toggleClass("far fas");
 
   // Get star icon's parent and id
   const story = star.parent();
   const storyId = story.attr("id");
-  
+
   if (star.hasClass("fas")) {
     addFavoriteStory(storyId);
   } else {
@@ -141,7 +141,7 @@ $(document).on("click", ".star", starClickHandler);
 
 /** Add a story to user's favorites */
 
-function addFavoriteStory(storyId) {
+async function addFavoriteStory(storyId) {
   console.debug("addFavoriteStory");
 
   const response = await axios({
@@ -151,10 +151,11 @@ function addFavoriteStory(storyId) {
       token: currentUser.loginToken,
     },
   });
+}
 
 /** Delete favorite from user's favorites */
 
-function deleteFavoriteStory(storyId) {
+async function deleteFavoriteStory(storyId) {
   console.debug("deleteFavoriteStory");
 
   const response = await axios({
