@@ -222,10 +222,38 @@ class User {
       const user = response.data.user;
       this.name = user.name;
       this.createdAt = user.createdAt;
-      this.favorites = user.favorites.map((s) => new Story(s));
-      this.ownStories = user.stories.map((s) => new Story(s));
+      this.favorites = new StoryList(user.favorites.map((s) => new Story(s)));
+      this.ownStories = new StoryList(user.stories.map((s) => new Story(s)));
     } catch (err) {
       console.error("updateOnChanges failed", err);
     }
+  }
+
+  /** Add a story to user's favorites */
+
+  async favoriteAStory(storyId) {
+    console.debug("addFavoriteStory");
+
+    const response = await axios({
+      url: `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
+      method: "POST",
+      data: {
+        token: currentUser.loginToken,
+      },
+    });
+  }
+
+  /** Delete favorite from user's favorites */
+
+  async unfavoriteAStory(storyId) {
+    console.debug("deleteFavoriteStory");
+
+    const response = await axios({
+      url: `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
+      method: "DELETE",
+      data: {
+        token: currentUser.loginToken,
+      },
+    });
   }
 }

@@ -131,9 +131,9 @@ async function favoriteClickHandler(evt) {
   const storyId = story.attr("id");
 
   if (star.hasClass("fas")) {
-    await addFavoriteStory(storyId);
+    await currentUser.favoriteAStory(storyId);
   } else {
-    await deleteFavoriteStory(storyId);
+    await currentUser.unfavoriteAStory(storyId);
   }
 
   // get user's updated info from API
@@ -142,41 +142,13 @@ async function favoriteClickHandler(evt) {
 
 $(document).on("click", ".star", favoriteClickHandler);
 
-/** Add a story to user's favorites */
-
-async function addFavoriteStory(storyId) {
-  console.debug("addFavoriteStory");
-
-  const response = await axios({
-    url: `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
-    method: "POST",
-    data: {
-      token: currentUser.loginToken,
-    },
-  });
-}
-
-/** Delete favorite from user's favorites */
-
-async function deleteFavoriteStory(storyId) {
-  console.debug("deleteFavoriteStory");
-
-  const response = await axios({
-    url: `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
-    method: "DELETE",
-    data: {
-      token: currentUser.loginToken,
-    },
-  });
-}
-
 /** Update user's favorites and own stories on page load and on changes */
 
-async function updateFavoritesAndOwnStories() {
-  console.debug("updateFavoritesAndOwnStories");
+async function updateUIOnChanges() {
+  console.debug("updateUIonChanges");
 
   // get user's updated info from API
-  await currentUser.updateOnChanges();
+  currentUser.updateOnChanges();
 
   // update favorites
   updateFavorites();
