@@ -44,3 +44,26 @@ function navSubmitStory() {
 }
 
 $body.on("click", "#nav-submit", navSubmitStory);
+
+/** When user clicks favorite stories, show favorites list */
+
+function navFavorites() {
+  console.debug("navFavorites");
+
+  hidePageComponents();
+  putFavoritesOnPage();
+  $favoriteStories.show();
+}
+
+$body.on("click", "#nav-favorites", navFavorites);
+
+/** When user clicks my stories, show my stories list */
+function navMyStories() {
+  console.debug("navMyStories");
+
+  hidePageComponents();
+  putMyStoriesOnPage();
+  $myStories.show();
+}
+
+$body.on("click", "#nav-my-stories", navMyStories);

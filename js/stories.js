@@ -19,7 +19,7 @@ async function getAndShowStoriesOnStart() {
  * Returns the markup for the story.
  */
 
-function generateStoryMarkup(story) {
+function generateStoryMarkup(story, isOwnStory, isFavorite) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
@@ -44,10 +44,17 @@ function putStoriesOnPage() {
 
   // loop through all of our stories and generate HTML for them
   for (let story of storyList.stories) {
-    const $story = generateStoryMarkup(story);
+    let isOwnStory, isFavorite;
+    if (currentUser) {
+      isOwnStory = currentUser.ownStories.contains(story);
+      isFavorite = currentUser.favorites.contains(story);
+    } else {
+      isOwnStory = false;
+      isFavorite = false;
+    }
+    const $story = generateStoryMarkup(story, isOwnStory, isFavorite);
     $allStoriesList.append($story);
   }
-
   $allStoriesList.show();
 }
 
@@ -75,6 +82,8 @@ async function addNewStoryAndPutOnPage(evt) {
     url,
   });
 
+  // get updated user object from server
+
   // generate HTML for story
   const $story = generateStoryMarkup(story);
 
@@ -94,4 +103,46 @@ function updateUIonNewStory() {
   console.debug("updateUIonNewStory");
   $addStoryForm.hide();
   $allStoriesList.show();
+}
+
+/** Put users favorites on page */
+function putFavoritesOnPage() {
+  console.debug("putFavoritesOnPage");
+
+  $favoriteStories.empty();
+
+  const isFavorite = true;
+  let isOwnStory;
+
+  // loop through all of the user favorite stories and generate HTML for them
+  for (let story of currentUser.favorites.stories) {
+    if (currentUser) {
+      isOwnStory = currentUser.ownStories.contains(story);
+    } else {
+      isOwnStory = false;
+    }
+    const $story = generateStoryMarkup(story, isOwnStory, isFavorite);
+    $favoriteStories.append($story);
+  }
+}
+
+/** Put users own stories on page */
+function putMyStoriesOnPage() {
+  console.debug("putMyStoriesOnPage");
+
+  $myStories.empty();
+
+  const isOwnStory = true;
+  let isFavorite;
+
+  // loop through all of the user own stories and generate HTML for them
+  for (let story of currentUser.ownStories.stories) {
+    if (currentUser) {
+      isFavorite = currentUser.favorites.contains(story);
+    } else {
+      isFavorite = false;
+    }
+    const $story = generateStoryMarkup(story, isOwnStory, isFavorite);
+    $myStories.append($story);
+  }
 }

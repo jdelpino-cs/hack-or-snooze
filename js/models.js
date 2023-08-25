@@ -87,6 +87,11 @@ class StoryList {
 
     return new Story(response.data.story);
   }
+
+  /** Checks if a story is in a StoryList */
+  contains(story) {
+    return this.stories.some((s) => s.storyId === story.storyId);
+  }
 }
 
 /******************************************************************************
@@ -108,8 +113,8 @@ class User {
     this.createdAt = createdAt;
 
     // instantiate Story instances for the user's favorites and ownStories
-    this.favorites = favorites.map((s) => new Story(s));
-    this.ownStories = ownStories.map((s) => new Story(s));
+    this.favorites = new StoryList(favorites.map((s) => new Story(s)));
+    this.ownStories = new StoryList(ownStories.map((s) => new Story(s)));
 
     // store the login token on the user so it's easy to find for API calls.
     this.loginToken = token;
@@ -197,6 +202,30 @@ class User {
     } catch (err) {
       console.error("loginViaStoredCredentials failed", err);
       return null;
+    }
+  }
+
+  async updateOnChanges() {
+    console.debug("updateOnChanges");
+
+    try {
+      // Query the API for the updated user's data
+      const response = await axios({
+        url: `${BASE_URL}/users/${this.username}`,
+        method: "GET",
+        data: {
+          token: this.loginToken,
+        },
+      });
+
+      // Update the current instance with new data
+      const user = response.data.user;
+      this.name = user.name;
+      this.createdAt = user.createdAt;
+      this.favorites = user.favorites.map((s) => new Story(s));
+      this.ownStories = user.stories.map((s) => new Story(s));
+    } catch (err) {
+      console.error("updateOnChanges failed", err);
     }
   }
 }

@@ -6,6 +6,8 @@ const $body = $("body");
 
 const $storiesLoadingMsg = $("#stories-loading-msg");
 const $allStoriesList = $("#all-stories-list");
+const $favoriteStories = $("#favorite-stories-list");
+const $myStories = $("#user-stories-list");
 
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
@@ -21,7 +23,14 @@ const $navLogOut = $("#nav-logout");
  */
 
 function hidePageComponents() {
-  const components = [$allStoriesList, $loginForm, $signupForm];
+  const components = [
+    $allStoriesList,
+    $favoriteStories,
+    $myStories,
+    $loginForm,
+    $signupForm,
+    $addStoryForm,
+  ];
   components.forEach((c) => c.hide());
 }
 
@@ -46,4 +55,5 @@ console.warn(
     " seeing those helpful debug messages. In your browser console, click on" +
     " menu 'Default Levels' and add Verbose"
 );
+
 $(start);

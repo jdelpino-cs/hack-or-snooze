@@ -119,25 +119,28 @@ function updateUIOnUserLogin() {
 /** When a story star is click, decides if it has to be added
  * or deleted from user favorites*/
 
-function favoriteClickHandler(evt) {
+async function favoriteClickHandler(evt) {
   console.debug("favoriteClickHandler");
 
-  // Toggle star icon class between regular –far– and solid -fas-
+  // toggle star icon class between regular –far– and solid -fas-
   const star = $(this);
   star.toggleClass("far fas");
 
-  // Get star icon's parent and id
+  // get star icon's parent and id
   const story = star.parent();
   const storyId = story.attr("id");
 
   if (star.hasClass("fas")) {
-    addFavoriteStory(storyId);
+    await addFavoriteStory(storyId);
   } else {
-    deleteFavoriteStory(storyId);
+    await deleteFavoriteStory(storyId);
   }
+
+  // get user's updated info from API
+  await currentUser.updateOnChanges();
 }
 
-$(document).on("click", ".star", starClickHandler);
+$(document).on("click", ".star", favoriteClickHandler);
 
 /** Add a story to user's favorites */
 
@@ -167,16 +170,17 @@ async function deleteFavoriteStory(storyId) {
   });
 }
 
-async function updateUserOnChanges() {
-  console.debug("updateUserOnChanges");
+/** Update user's favorites and own stories on page load and on changes */
 
-  const response = await axios({
-    url: `${BASE_URL}/users/${currentUser.username}`,
-    method: "GET",
-    data: {
-      token: currentUser.loginToken,
-    },
-  });
+async function updateFavoritesAndOwnStories() {
+  console.debug("updateFavoritesAndOwnStories");
 
-  currentUser = new User(response.data.user);
+  // get user's updated info from API
+  await currentUser.updateOnChanges();
+
+  // update favorites
+  updateFavorites();
+
+  // update own stories
+  updateOwnStories();
 }
