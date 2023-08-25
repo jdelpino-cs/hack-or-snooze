@@ -166,3 +166,17 @@ async function deleteFavoriteStory(storyId) {
     },
   });
 }
+
+async function updateUserOnChanges() {
+  console.debug("updateUserOnChanges");
+
+  const response = await axios({
+    url: `${BASE_URL}/users/${currentUser.username}`,
+    method: "GET",
+    data: {
+      token: currentUser.loginToken,
+    },
+  });
+
+  currentUser = new User(response.data.user);
+}
