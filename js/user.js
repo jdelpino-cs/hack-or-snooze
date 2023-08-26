@@ -146,18 +146,3 @@ async function favoriteClickHandler() {
 }
 
 $(document).on("click", ".fa-star", favoriteClickHandler);
-
-/** Update user's favorites and own stories on page load and on changes */
-
-// async function updateUIOnUserChanges() {
-//   console.debug("updateUIOnUserChanges");
-
-//   // get user's updated info from API
-//   currentUser.refreshData();
-
-//   // update favorites
-//   updateFavorites();
-
-//   // update own stories
-//   updateOwnStories();
-// }
