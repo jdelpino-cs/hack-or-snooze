@@ -122,36 +122,36 @@ async function favoriteClickHandler(evt) {
   console.debug("favoriteClickHandler");
 
   // toggle star icon class between regular –far– and solid -fas-
-  const star = $(this);
-  star.toggleClass("far fas");
+  const starIcon = $(this);
+  starIcon.toggleClass("far fas");
 
   // get star icon's parent and id
-  const story = star.parent();
+  const story = starIcon.parent().parent();
   const storyId = story.attr("id");
 
-  if (star.hasClass("fas")) {
+  if (starIcon.hasClass("fas")) {
     await currentUser.favoriteAStory(storyId);
   } else {
     await currentUser.unfavoriteAStory(storyId);
   }
 
   // get user's updated info from API
-  await currentUser.updateOnChanges();
+  await currentUser.refreshData();
 }
 
-$(document).on("click", ".star", favoriteClickHandler);
+$(document).on("click", ".fa-star", favoriteClickHandler);
 
 /** Update user's favorites and own stories on page load and on changes */
 
-async function updateUIOnUserChanges() {
-  console.debug("updateUIOnUserChanges");
+// async function updateUIOnUserChanges() {
+//   console.debug("updateUIOnUserChanges");
 
-  // get user's updated info from API
-  currentUser.updateOnChanges();
+//   // get user's updated info from API
+//   currentUser.refreshData();
 
-  // update favorites
-  updateFavorites();
+//   // update favorites
+//   updateFavorites();
 
-  // update own stories
-  updateOwnStories();
-}
+//   // update own stories
+//   updateOwnStories();
+// }

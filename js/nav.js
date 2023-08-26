@@ -47,20 +47,22 @@ $body.on("click", "#nav-submit", navSubmitStory);
 
 /** When user clicks favorite stories, show favorites list */
 
-function navFavorites() {
+async function navFavorites() {
   console.debug("navFavorites");
 
   hidePageComponents();
+  await currentUser.refreshData();
   putFavoritesOnPage();
 }
 
 $body.on("click", "#nav-favorites", navFavorites);
 
 /** When user clicks my stories, show my stories list */
-function navMyStories() {
+async function navMyStories() {
   console.debug("navMyStories");
 
   hidePageComponents();
+  await currentUser.refreshData();
   putMyStoriesOnPage();
 }
 

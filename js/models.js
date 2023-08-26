@@ -184,7 +184,7 @@ class User {
       const response = await axios({
         url: `${BASE_URL}/users/${username}`,
         method: "GET",
-        params: { token },
+        params: { token }, // This is equivalent to { token: token }
       });
 
       let { user } = response.data;
@@ -205,17 +205,16 @@ class User {
     }
   }
 
-  async updateOnChanges() {
-    console.debug("updateOnChanges");
+  async refreshData() {
+    console.debug("refreshData");
+    console.log(this.loginToken);
 
     try {
       // Query the API for the updated user's data
       const response = await axios({
         url: `${BASE_URL}/users/${this.username}`,
         method: "GET",
-        data: {
-          token: this.loginToken,
-        },
+        params: { token: this.loginToken },
       });
 
       // Update the current instance with new data
@@ -225,7 +224,7 @@ class User {
       this.favorites = new StoryList(user.favorites.map((s) => new Story(s)));
       this.ownStories = new StoryList(user.stories.map((s) => new Story(s)));
     } catch (err) {
-      console.error("updateOnChanges failed", err);
+      console.error("refreshData failed", err);
     }
   }
 
@@ -233,7 +232,11 @@ class User {
 
   async favoriteAStory(storyId) {
     console.debug("addFavoriteStory");
-
+    console.log(this);
+    console.log(storyId);
+    console.log(this.loginToken);
+    console.log(this.username);
+    console.log(`${BASE_URL}/users/${this.username}/favorites/${storyId}`);
     const response = await axios({
       url: `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
       method: "POST",
