@@ -72,6 +72,8 @@ async function getAndPutStoriesOnPage() {
 
   storyList = await StoryList.getStories();
 
+  localStorage.setItem("currentPage", "main");
+
   // loop through all of our stories and generate HTML for them
   for (let story of storyList.stories) {
     let isOwnStory, isFavorite;
@@ -86,8 +88,6 @@ async function getAndPutStoriesOnPage() {
     $allStoriesList.append($story);
   }
   $allStoriesList.show();
-
-  localStorage.setItem("currentPage", "main");
 }
 
 /** Get new story data from form, add story to backend and to DOM */
@@ -163,12 +163,14 @@ function putFavoritesOnPage() {
 }
 
 /** Put users own stories on page */
-function putMyStoriesOnPage() {
+async function putMyStoriesOnPage() {
   console.debug("putMyStoriesOnPage");
 
   $myStories.empty();
 
   localStorage.setItem("currentPage", "myStories");
+
+  storyList = await StoryList.getStories();
 
   const isOwnStory = true;
   let isFavorite;

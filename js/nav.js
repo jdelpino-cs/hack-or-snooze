@@ -9,6 +9,7 @@
 async function navAllStories(evt) {
   console.debug("navAllStories", evt);
   hidePageComponents();
+  await currentUser.refreshData();
   await getAndPutStoriesOnPage();
 }
 
