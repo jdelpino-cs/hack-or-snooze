@@ -118,7 +118,7 @@ function updateUIOnUserLogin() {
 /** When a story star is click, decides if it has to be added
  * or deleted from user favorites*/
 
-async function favoriteClickHandler(evt) {
+async function favoriteClickHandler() {
   console.debug("favoriteClickHandler");
 
   // toggle star icon class between regular –far– and solid -fas-
@@ -133,6 +133,12 @@ async function favoriteClickHandler(evt) {
     await currentUser.favoriteAStory(storyId);
   } else {
     await currentUser.unfavoriteAStory(storyId);
+  }
+
+  console.log(localStorage.getItem("currentPage"));
+  if (localStorage.getItem("currentPage") === "favorites") {
+    story.remove();
+    console.log("favorite removed!");
   }
 
   // get user's updated info from API

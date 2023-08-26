@@ -207,7 +207,6 @@ class User {
 
   async refreshData() {
     console.debug("refreshData");
-    console.log(this.loginToken);
 
     try {
       // Query the API for the updated user's data
@@ -232,11 +231,6 @@ class User {
 
   async favoriteAStory(storyId) {
     console.debug("addFavoriteStory");
-    console.log(this);
-    console.log(storyId);
-    console.log(this.loginToken);
-    console.log(this.username);
-    console.log(`${BASE_URL}/users/${this.username}/favorites/${storyId}`);
     const response = await axios({
       url: `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
       method: "POST",

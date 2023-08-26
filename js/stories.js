@@ -27,7 +27,7 @@ async function showStoriesOnStart() {
  */
 
 function generateStoryMarkup(story, isOwnStory, isFavorite) {
-  // console.debug("generateStoryMarkup", story);
+  console.debug("generateStoryMarkup");
 
   const hostName = story.getHostName();
 
