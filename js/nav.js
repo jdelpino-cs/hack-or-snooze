@@ -52,7 +52,6 @@ function navFavorites() {
 
   hidePageComponents();
   putFavoritesOnPage();
-  $favoriteStories.show();
 }
 
 $body.on("click", "#nav-favorites", navFavorites);
@@ -63,7 +62,6 @@ function navMyStories() {
 
   hidePageComponents();
   putMyStoriesOnPage();
-  $myStories.show();
 }
 
 $body.on("click", "#nav-my-stories", navMyStories);

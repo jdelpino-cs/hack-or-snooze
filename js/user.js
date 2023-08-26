@@ -144,8 +144,8 @@ $(document).on("click", ".star", favoriteClickHandler);
 
 /** Update user's favorites and own stories on page load and on changes */
 
-async function updateUIOnChanges() {
-  console.debug("updateUIonChanges");
+async function updateUIOnUserChanges() {
+  console.debug("updateUIOnUserChanges");
 
   // get user's updated info from API
   currentUser.updateOnChanges();

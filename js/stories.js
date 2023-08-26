@@ -3,13 +3,23 @@
 // This is the global list of the stories, an instance of StoryList
 let storyList;
 
-/** Get and show stories when site first loads. */
+/** Get and show stories when site first loads or reloads.
+ * It checks what is the current story list that must be shown:
+ * all, favorites or my stories. */
 
 async function getAndShowStoriesOnStart() {
-  storyList = await StoryList.getStories();
-  $storiesLoadingMsg.remove();
-
-  putStoriesOnPage();
+  hidePageComponents();
+  if (localStorage.getItem("currentPage") === "favorites") {
+    $storiesLoadingMsg.remove();
+    putFavoritesOnPage();
+  } else if (localStorage.getItem("currentPage") === "myStories") {
+    $storiesLoadingMsg.remove();
+    putMyStoriesOnPage();
+  } else {
+    storyList = await StoryList.getStories();
+    $storiesLoadingMsg.remove();
+    putStoriesOnPage();
+  }
 }
 
 /**
@@ -56,6 +66,8 @@ function putStoriesOnPage() {
     $allStoriesList.append($story);
   }
   $allStoriesList.show();
+
+  localStorage.setItem("currentPage", "main");
 }
 
 /** Get new story data from form, add story to backend and to DOM */
@@ -124,6 +136,9 @@ function putFavoritesOnPage() {
     const $story = generateStoryMarkup(story, isOwnStory, isFavorite);
     $favoriteStories.append($story);
   }
+
+  $favoriteStories.show();
+  localStorage.setItem("currentPage", "favorites");
 }
 
 /** Put users own stories on page */
@@ -145,4 +160,8 @@ function putMyStoriesOnPage() {
     const $story = generateStoryMarkup(story, isOwnStory, isFavorite);
     $myStories.append($story);
   }
+
+  $myStories.show();
+
+  localStorage.setItem("currentPage", "myStories");
 }
