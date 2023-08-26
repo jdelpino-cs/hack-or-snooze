@@ -144,3 +144,22 @@ async function favoriteClickHandler() {
 }
 
 $(document).on("click", ".fa-star", favoriteClickHandler);
+
+/** When a trash can is clicked, deletes the story from the API and DOM */
+async function deleteClickHandler() {
+  console.log("deleteClickHandler");
+
+  // get trash icon's parent story and id
+  const story = $(this).parent().parent();
+  const storyId = story.attr("id");
+
+  // delete the story from the UI and the API
+  story.remove();
+  console.log(storyList);
+  await storyList.deleteStory(storyId);
+
+  // get user's updated info from API
+  await currentUser.refreshData();
+}
+
+$(document).on("click", ".fa-trash-alt", deleteClickHandler);

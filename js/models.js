@@ -88,6 +88,20 @@ class StoryList {
     return new Story(response.data.story);
   }
 
+  async deleteStory(storyId) {
+    try {
+      const response = await axios({
+        url: `${BASE_URL}/stories/${storyId}`,
+        method: "DELETE",
+        data: {
+          token: currentUser.loginToken,
+        },
+      });
+    } catch (err) {
+      console.error("deleteStory failed", err);
+    }
+  }
+
   /** Checks if a story is in a StoryList */
   contains(story) {
     return this.stories.some((s) => s.storyId === story.storyId);
