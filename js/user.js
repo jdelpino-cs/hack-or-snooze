@@ -135,10 +135,8 @@ async function favoriteClickHandler() {
     await currentUser.unfavoriteAStory(storyId);
   }
 
-  console.log(localStorage.getItem("currentPage"));
   if (localStorage.getItem("currentPage") === "favorites") {
     story.remove();
-    console.log("favorite removed!");
   }
 
   // get user's updated info from API
