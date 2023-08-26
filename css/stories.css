@@ -16,7 +16,6 @@
   margin: 20px 30px;
 }
 
-
 /* Individual stories */
 
 .story-link {
@@ -36,4 +35,15 @@
 
 .story-user {
   display: block;
+}
+
+.star,
+.trash-can {
+  font-size: 0.8rem;
+  margin: 0 2px;
+  cursor: pointer;
+}
+
+.trash-can:hover {
+  color: red;
 }
