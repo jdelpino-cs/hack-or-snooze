@@ -30,10 +30,28 @@ function generateStoryMarkup(story, isOwnStory, isFavorite) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
+
+  let typeOfStar;
+  if (isFavorite) {
+    typeOfStar = "fas";
+  } else {
+    typeOfStar = "far";
+  }
+
+  let canOrNotCan;
+  if (isOwnStory && localStorage.getItem("currentPage") === "myStories") {
+    canOrNotCan = "fas fa-trash-alt";
+  } else {
+    canOrNotCan = "";
+  }
+
   return $(`
       <li id="${story.storyId}">
+        <span class="trash-can">
+          <i class="${canOrNotCan}"></i>
+        </span>
         <span class="star">
-          <i class="far fa-star"></i>
+          <i class="${typeOfStar} fa-star"></i>
         </span>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
@@ -125,6 +143,8 @@ function putFavoritesOnPage() {
 
   $favoriteStories.empty();
 
+  localStorage.setItem("currentPage", "favorites");
+
   const isFavorite = true;
   let isOwnStory;
 
@@ -140,8 +160,6 @@ function putFavoritesOnPage() {
   }
 
   $favoriteStories.show();
-
-  localStorage.setItem("currentPage", "favorites");
 }
 
 /** Put users own stories on page */
@@ -149,6 +167,8 @@ function putMyStoriesOnPage() {
   console.debug("putMyStoriesOnPage");
 
   $myStories.empty();
+
+  localStorage.setItem("currentPage", "myStories");
 
   const isOwnStory = true;
   let isFavorite;
@@ -165,6 +185,4 @@ function putMyStoriesOnPage() {
   }
 
   $myStories.show();
-
-  localStorage.setItem("currentPage", "myStories");
 }
