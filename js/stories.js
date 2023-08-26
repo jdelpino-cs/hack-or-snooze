@@ -7,18 +7,15 @@ let storyList;
  * It checks what is the current story list that must be shown:
  * all, favorites or my stories. */
 
-async function getAndShowStoriesOnStart() {
+async function showStoriesOnStart() {
+  $storiesLoadingMsg.remove();
   hidePageComponents();
   if (localStorage.getItem("currentPage") === "favorites") {
-    $storiesLoadingMsg.remove();
     putFavoritesOnPage();
   } else if (localStorage.getItem("currentPage") === "myStories") {
-    $storiesLoadingMsg.remove();
     putMyStoriesOnPage();
   } else {
-    storyList = await StoryList.getStories();
-    $storiesLoadingMsg.remove();
-    putStoriesOnPage();
+    await getAndPutStoriesOnPage();
   }
 }
 
@@ -47,10 +44,12 @@ function generateStoryMarkup(story, isOwnStory, isFavorite) {
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 
-function putStoriesOnPage() {
+async function getAndPutStoriesOnPage() {
   console.debug("putStoriesOnPage");
 
   $allStoriesList.empty();
+
+  storyList = await StoryList.getStories();
 
   // loop through all of our stories and generate HTML for them
   for (let story of storyList.stories) {
@@ -138,6 +137,7 @@ function putFavoritesOnPage() {
   }
 
   $favoriteStories.show();
+
   localStorage.setItem("currentPage", "favorites");
 }
 
