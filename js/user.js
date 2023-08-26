@@ -121,8 +121,8 @@ function updateUIOnUserLogin() {
 async function favoriteClickHandler() {
   console.debug("favoriteClickHandler");
 
-  // toggle star icon class between regular –far– and solid -fas-
   const starIcon = $(this);
+  // toggle star icon class between regular –far– and solid -fas-
   starIcon.toggleClass("far fas");
 
   // get star icon's parent and id
