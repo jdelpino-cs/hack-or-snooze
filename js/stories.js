@@ -75,6 +75,12 @@ async function getAndPutStoriesOnPage() {
 
   localStorage.setItem("currentPage", "main");
 
+  if (!storyList.stories) {
+    $allStoriesList.append("<h5>No stories available. Try submittin one!<h5>");
+    $allStoriesList.show();
+    return;
+  }
+
   // loop through all of our stories and generate HTML for them
   for (let story of storyList.stories) {
     let isOwnStory, isFavorite;
