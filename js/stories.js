@@ -91,6 +91,8 @@ async function getAndPutStoriesOnPage() {
     return;
   }
 
+  $allStoriesList.append("<h1>Stories<h1>");
+
   // loop through all of our stories and generate HTML for them
   for (let story of storyList.stories) {
     let isOwnStory, isFavorite;
@@ -169,6 +171,8 @@ function putFavoritesOnPage() {
     return;
   }
 
+  $favoriteStories.append("<h1>Favorites<h1>");
+
   const isFavorite = true;
   let isOwnStory;
 
@@ -194,7 +198,7 @@ async function putMyStoriesOnPage() {
 
   localStorage.setItem("currentPage", "myStories");
 
-  storyList = await StoryList.getStories();
+  $myStories.append("<h1>My Stories<h1>");
 
   const isOwnStory = true;
   let isFavorite;
