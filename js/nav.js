@@ -9,7 +9,9 @@
 async function navAllStories(evt) {
   console.debug("navAllStories", evt);
   hidePageComponents();
-  await currentUser.refreshData();
+  if (currentUser) {
+    await currentUser.refreshData();
+  }
   await getAndPutStoriesOnPage();
 }
 
@@ -33,6 +35,7 @@ function updateNavOnLogin() {
   $(".main-nav-links").show();
   $navLogin.hide();
   $navLogOut.show();
+  $navLeft.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
 
