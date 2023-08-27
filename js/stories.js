@@ -9,6 +9,7 @@ let storyList;
 
 async function showStoriesOnStart() {
   $storiesLoadingMsg.remove();
+  $navLeft.hide();
   hidePageComponents();
   if (localStorage.getItem("currentPage") === "favorites") {
     putFavoritesOnPage();
