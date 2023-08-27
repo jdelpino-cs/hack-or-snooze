@@ -152,6 +152,12 @@ function putFavoritesOnPage() {
 
   localStorage.setItem("currentPage", "favorites");
 
+  if (currentUser.favorites.stories.length === 0) {
+    $favoriteStories.append("<h5>You haven't added any favorites yet.<h5>");
+    $favoriteStories.show();
+    return;
+  }
+
   const isFavorite = true;
   let isOwnStory;
 
