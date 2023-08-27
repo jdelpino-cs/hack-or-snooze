@@ -141,6 +141,7 @@ $addStoryForm.on("submit", addNewStoryAndPutOnPage);
 function updateUIonNewStory() {
   console.debug("updateUIonNewStory");
   $addStoryForm.hide();
+  $addStoryForm[0].reset();
   $allStoriesList.show();
 }
 
