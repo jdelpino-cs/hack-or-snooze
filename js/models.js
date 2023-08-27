@@ -106,6 +106,21 @@ class StoryList {
   contains(story) {
     return this.stories.some((s) => s.storyId === story.storyId);
   }
+
+  async updateStory(storyId, storyData) {
+    try {
+      const response = await axios({
+        url: `${BASE_URL}/stories/${storyId}`,
+        method: "PATCH",
+        data: {
+          token: currentUser.loginToken,
+          story: storyData,
+        },
+      });
+    } catch (err) {
+      console.error("updateStory failed", err);
+    }
+  }
 }
 
 /******************************************************************************
