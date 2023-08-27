@@ -44,10 +44,16 @@
 }
 
 .star,
+.pen,
 .trash-can {
   font-size: 0.8rem;
   margin: 0 2px;
   cursor: pointer;
+}
+
+.star:hover,
+.pen:hover {
+  color: orange;
 }
 
 .trash-can:hover {

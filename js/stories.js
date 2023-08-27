@@ -46,6 +46,13 @@ function generateStoryMarkup(story, isOwnStory, isFavorite) {
     canOrNotCan = "";
   }
 
+  let penOrNotPen;
+  if (isOwnStory && localStorage.getItem("currentPage") === "myStories") {
+    penOrNotPen = "fa-solid fa-pen-to-square";
+  } else {
+    penOrNotPen = "";
+  }
+
   return $(`
       <li id="${story.storyId}">
         <span class="trash-can">
@@ -53,6 +60,9 @@ function generateStoryMarkup(story, isOwnStory, isFavorite) {
         </span>
         <span class="star">
           <i class="${typeOfStar} fa-star"></i>
+        </span>
+        <span class="pen">
+          <i class="${penOrNotPen}"></i>
         </span>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
