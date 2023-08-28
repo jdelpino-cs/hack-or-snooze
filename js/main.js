@@ -46,12 +46,14 @@ async function start() {
   console.debug("start");
 
   // "Remember logged-in user" and log in, if credentials in localStorage
-
   await checkForRememberedUser();
-  await showDefaultOrCurrentPage();
 
   // if we got a logged-in user
-  if (currentUser) updateUIOnUserLogin();
+  if (currentUser) {
+    updateUIOnUserLogin();
+  } else {
+    await showDefaultOrCurrentPage();
+  }
 }
 
 // Once the DOM is entirely loaded, begin the app
