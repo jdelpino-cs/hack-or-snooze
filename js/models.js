@@ -26,6 +26,16 @@ class Story {
     const urlObject = new URL(this.url);
     return urlObject.hostname;
   }
+
+  static async getStory(storyId) {
+    const response = await axios({
+      url: `${BASE_URL}/stories/${storyId}`,
+      method: "GET",
+      params: { storyId },
+    });
+
+    return new Story(response.data.story);
+  }
 }
 
 /******************************************************************************
@@ -108,6 +118,15 @@ class StoryList {
   }
 
   async updateStory(storyId, storyData) {
+    const obj = {
+      url: `${BASE_URL}/stories/${storyId}`,
+      method: "PATCH",
+      data: {
+        token: currentUser.loginToken,
+        story: storyData,
+      },
+    };
+    console.log(obj);
     try {
       const response = await axios({
         url: `${BASE_URL}/stories/${storyId}`,

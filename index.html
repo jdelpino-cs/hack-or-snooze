@@ -125,6 +125,24 @@
       <button type="submit">add story</button>
     </form>
 
+    <!-- Update story form-->
+    <form action="#" id="update-story-form" class="story-form hidden" method="patch" data-story-id="">
+      <h4>Update Story</h4>
+      <div class="form-input">
+        <label for="update-story-title">title</label>
+        <input id="update-story-title" name="update-story-title" autocapitalize="words">
+      </div>
+      <div class="form-input">
+        <label for="update-story-author">author</label>
+        <input id="update-story-author" name="update-story-author" autocapitalize="words">
+      </div>
+      <div class="form-input">
+        <label for="update-story-url">url</label>
+        <input id="update-story-url" type="url" name="update-story-url" autocapitalize="none"
+          placeholder="https://example.com">
+      </div>
+      <button type="submit">update story</button>
+    </form>
 
     <!-- Library JS & our JS -->
     <script src="https://unpkg.com/jquery"></script>

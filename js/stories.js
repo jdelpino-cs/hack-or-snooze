@@ -1,15 +1,12 @@
 "use strict";
 
-// This is the global list of the stories, an instance of StoryList
-let storyList;
-
 /** Get and show stories when site first loads or reloads.
  * It checks what is the current story list that must be shown:
  * all, favorites or my stories. */
 
 async function showStoriesOnStart() {
+  storyList = await StoryList.getStories();
   $storiesLoadingMsg.remove();
-  $navLeft.hide();
   hidePageComponents();
   if (localStorage.getItem("currentPage") === "favorites") {
     putFavoritesOnPage();
@@ -80,8 +77,6 @@ async function getAndPutStoriesOnPage() {
   console.debug("putStoriesOnPage");
 
   $allStoriesList.empty();
-
-  storyList = await StoryList.getStories();
 
   localStorage.setItem("currentPage", "main");
 
@@ -216,3 +211,58 @@ async function putMyStoriesOnPage() {
 
   $myStories.show();
 }
+
+/** When user clicks pen, shows update story form and populate it with the
+ * up-to-date story data.
+ */
+async function getUpdateStoryFormClickHandler() {
+  console.debug("showUpdateStoryForm");
+
+  hidePageComponents();
+
+  // get stories from server to avoid an undefined storyList object
+  // in case of previous page refresh
+  storyList = await StoryList.getStories();
+
+  // get trash icon's parent story and id
+  const story = $(this).parent().parent();
+  const storyId = story.attr("id");
+
+  // get story updated info from API
+  const storyFreshData = await Story.getStory(storyId);
+
+  // find and populate all the fields in the update story form as well
+  // as store the storyId as a form data attribute
+  $updateStoryForm.attr("data-story-id", storyId);
+  $updateStoryForm.find("#update-story-title").val(storyFreshData.title);
+  $updateStoryForm.find("#update-story-author").val(storyFreshData.author);
+  $updateStoryForm.find("#update-story-url").val(storyFreshData.url);
+
+  $updateStoryForm.show();
+}
+
+$(document).on("click", ".fa-pen-to-square", getUpdateStoryFormClickHandler);
+
+async function updateStoryAndRefreshUI(evt) {
+  evt.preventDefault();
+  console.log("updateStoryAndRefreshUI");
+
+  hidePageComponents();
+
+  const storyId = $updateStoryForm.attr("data-story-id");
+
+  // get the story data from the form and construct the data object
+  const storyData = {
+    title: $updateStoryForm.find("#update-story-title").val(),
+    author: $updateStoryForm.find("#update-story-author").val(),
+    url: $updateStoryForm.find("#update-story-url").val(),
+  };
+
+  console.log(storyId, storyData);
+  await storyList.updateStory(storyId, storyData);
+  $updateStoryForm[0].reset();
+  await currentUser.refreshData();
+  await showStoriesOnStart();
+}
+
+$(document).on("submit", "#update-story-form", updateStoryAndRefreshUI);

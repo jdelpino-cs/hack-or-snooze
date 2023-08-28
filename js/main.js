@@ -1,5 +1,8 @@
 "use strict";
 
+// This is the global list of the stories, an instance of StoryList
+let storyList;
+
 // So we don't have to keep re-finding things on page, find DOM elements once:
 
 const $body = $("body");
@@ -12,6 +15,7 @@ const $myStories = $("#user-stories-list");
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
 const $addStoryForm = $("#add-story-form");
+const $updateStoryForm = $("#update-story-form");
 
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
@@ -31,6 +35,7 @@ function hidePageComponents() {
     $loginForm,
     $signupForm,
     $addStoryForm,
+    $updateStoryForm,
   ];
   components.forEach((c) => c.hide());
 }
