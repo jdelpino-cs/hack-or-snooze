@@ -48,7 +48,7 @@ async function start() {
   // "Remember logged-in user" and log in, if credentials in localStorage
 
   await checkForRememberedUser();
-  await showStoriesOnStart();
+  await showDefaultOrCurrentPage();
 
   // if we got a logged-in user
   if (currentUser) updateUIOnUserLogin();

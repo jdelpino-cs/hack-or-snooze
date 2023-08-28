@@ -112,7 +112,7 @@ function updateUIOnUserLogin() {
 
   $loginForm.hide();
   $signupForm.hide();
-  showStoriesOnStart();
+  showDefaultOrCurrentPage();
   updateNavOnLogin();
 }
 

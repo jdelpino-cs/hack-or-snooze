@@ -4,7 +4,7 @@
  * It checks what is the current story list that must be shown:
  * all, favorites or my stories. */
 
-async function showStoriesOnStart() {
+async function showDefaultOrCurrentPage() {
   storyList = await StoryList.getStories();
   $storiesLoadingMsg.remove();
   hidePageComponents();
@@ -262,7 +262,7 @@ async function updateStoryAndRefreshUI(evt) {
   await storyList.updateStory(storyId, storyData);
   $updateStoryForm[0].reset();
   await currentUser.refreshData();
-  await showStoriesOnStart();
+  await showDefaultOrCurrentPage();
 }
 
 $(document).on("submit", "#update-story-form", updateStoryAndRefreshUI);
